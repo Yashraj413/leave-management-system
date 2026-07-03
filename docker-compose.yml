@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: leavems-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: leavems-backend
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/leave_management
+      - JWT_SECRET=${JWT_SECRET:-please_change_me}
+      - JWT_EXPIRES_IN=1d
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-please_change_me_too}
+      - JWT_REFRESH_EXPIRES_IN=7d
+      - CLIENT_URL=http://localhost:5173
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: leavems-frontend
+    restart: unless-stopped
+    ports:
+      - '5173:80'
+    environment:
+      - VITE_API_BASE_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
