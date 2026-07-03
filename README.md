@@ -1,4 +1,4 @@
-# Leave Management System
+# Leave Management Software
 
 A full-stack MVP that lets employees submit and track leave requests, and lets managers review, approve, or reject them — replacing manual email/spreadsheet tracking with a single source of truth.
 
