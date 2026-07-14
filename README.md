@@ -195,13 +195,3 @@ Run `npm run seed` in `backend/` first, then:
 
 - Balancing "soft delete" (cancel) vs hard delete for leave records — chose soft delete so the audit trail (who approved/rejected what, and when) is never lost, which better matches how HR systems actually need to behave.
 - Keeping the refresh-token flow secure without adding a dependency-heavy session store: solved with a short-lived JWT access token + httpOnly refresh cookie, refreshed transparently via an axios interceptor.
-
-## 14. If I Had More Time
-
-- Add the automated test suite and CI pipeline (listed above) — this was the main tradeoff made to hit the assessment deadline.
-- Add optimistic UI updates on approve/reject so the manager queue updates instantly rather than waiting on a refetch.
-- Add a company holiday calendar for accurate working-day calculations.
-
----
-
-*Built as a technical assessment submission. Every design decision above is one I can walk through in detail in a follow-up technical interview.*
